@@ -1,4 +1,10 @@
-import { AuthService, EmailAlreadyUsedError } from "./auth.service";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import {
+  AuthService,
+  EmailAlreadyUsedError,
+  InvalidCredentialsError,
+} from "./auth.service";
 import { UserRepository } from "../repositories/user.repository";
 
 // A fake repository, so these unit tests never touch the real database.
@@ -16,7 +22,7 @@ describe("AuthService.register", () => {
       role: "USER" as const,
       ...data,
     }));
-    const service = new AuthService(repo);
+    const service = new AuthService(repo, "test-secret");
 
     const user = await service.register("a@b.com", "password123");
 
@@ -36,7 +42,7 @@ describe("AuthService.register", () => {
       passwordHash: "x",
       role: "USER",
     });
-    const service = new AuthService(repo);
+    const service = new AuthService(repo, "test-secret");
 
     await expect(service.register("a@b.com", "password123")).rejects.toThrow(
       EmailAlreadyUsedError
