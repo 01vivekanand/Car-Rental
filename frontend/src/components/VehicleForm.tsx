@@ -14,6 +14,7 @@ const fields = [
   { key: "category", label: "Category (Sedan, SUV, Truck, Electric)", type: "text" },
   { key: "price", label: "Price", type: "number" },
   { key: "quantity", label: "Quantity in stock", type: "number" },
+  { key: "imageUrl", label: "Image path or link (optional)", type: "text" },
 ] as const;
 
 const focus =
@@ -26,6 +27,7 @@ export default function VehicleForm({ initial, onSubmit, onClose }: Props) {
     category: initial?.category ?? "",
     price: String(initial?.price ?? ""),
     quantity: String(initial?.quantity ?? 0),
+    imageUrl: initial?.imageUrl ?? "",
   });
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -44,6 +46,7 @@ export default function VehicleForm({ initial, onSubmit, onClose }: Props) {
         category: values.category.trim(),
         price: Number(values.price),
         quantity: Number(values.quantity),
+        imageUrl: values.imageUrl.trim() || null,
       });
     } catch (err) {
       setError(errorText(err));
@@ -60,7 +63,7 @@ export default function VehicleForm({ initial, onSubmit, onClose }: Props) {
           <label key={f.key} className="block text-sm font-medium text-[#3C4A63]">
             {f.label}
             <input
-              required
+              required={f.key !== "imageUrl"}
               type={f.type}
               min={f.type === "number" ? 0 : undefined}
               step={f.key === "price" ? "0.01" : undefined}

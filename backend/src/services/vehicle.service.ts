@@ -47,7 +47,17 @@ function validate(data: Partial<NewVehicle>, partial: boolean) {
   if (quantity !== undefined && !(Number.isInteger(quantity) && quantity >= 0)) {
     throw new VehicleValidationError("quantity must be a whole number of 0 or more");
   }
+
+    const { imageUrl } = data;
+  if (
+    imageUrl !== undefined &&
+    imageUrl !== null &&
+    (typeof imageUrl !== "string" || imageUrl.length > 500)
+  ) {
+    throw new VehicleValidationError("imageUrl must be text of 500 characters or less");
+  }
 }
+
 
 export class VehicleService {
   constructor(private readonly vehicles: VehicleRepository) {}

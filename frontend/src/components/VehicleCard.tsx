@@ -25,7 +25,11 @@ export default function VehicleCard({ vehicle, isAdmin, onPurchase, onEdit, onDe
       <div className="relative">
         <div className={`flex h-44 items-center justify-center px-2 ${soldOut ? "opacity-50 grayscale" : ""}`}>
           {vehicle.imageUrl ? (
-            <img src={vehicle.imageUrl} alt="" className="max-h-full object-contain" />
+           <img
+  src={vehicle.imageUrl}
+  alt=""
+  className="max-h-full w-full object-contain mix-blend-multiply"
+/>
           ) : (
             <CarArt
               kind={kindFromCategory(vehicle.category)}

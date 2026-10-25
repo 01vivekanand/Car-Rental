@@ -30,7 +30,7 @@ const optionalText = (value: unknown): string | undefined =>
 /** Keeps only the fields a client is allowed to set. */
 const pickVehicleFields = (body: Record<string, unknown> | undefined) => {
   const picked: Record<string, unknown> = {};
-  for (const key of ["make", "model", "category", "price", "quantity"]) {
+  for (const key of ["make", "model", "category", "price", "quantity", "imageUrl"]) {
     if (body?.[key] !== undefined) picked[key] = body[key];
   }
   return picked;

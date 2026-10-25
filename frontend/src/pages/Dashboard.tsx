@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { api, errorText } from "../api";
 import { useAuth } from "../auth";
-import { CarRow } from "../components/CarArt";
+
 import VehicleCard from "../components/VehicleCard";
 import VehicleForm from "../components/VehicleForm";
 import type { SearchFilters, Vehicle, VehicleInput } from "../types";
@@ -98,39 +98,45 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#F3F6FC] text-[#0F1B33]">
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#3A5796] via-[#8EA2D3] to-[#F3F6FC] pb-24 pt-24">
-        <header className="absolute inset-x-0 top-0">
-          <div className="mx-auto grid max-w-6xl grid-cols-3 items-center px-5 py-5 text-white">
-            <p className="truncate text-sm text-white/85 max-sm:invisible">
-              {user?.email}
-              {isAdmin ? " (admin)" : ""}
-            </p>
-            <span className="text-center text-lg font-semibold tracking-[0.3em] sm:text-xl">MARQUE</span>
-            <div className="flex items-center justify-end gap-2">
-              {isAdmin && (
-                <button
-                  onClick={() => setEditing("new")}
-                  className={`rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#0F1B33] hover:bg-[#EEF1F7] ${focus}`}
-                >
-                  Add vehicle
-                </button>
-              )}
-              <button
-                onClick={logout}
-                className={`rounded-full border border-white/60 px-4 py-2 text-sm font-medium hover:bg-white/10 ${focus}`}
-              >
-                Log out
-              </button>
-            </div>
-          </div>
-        </header>
+      <section className="relative h-[460px] overflow-hidden bg-[#DCE6EF] sm:h-[560px]">
+  <img
+    src="/hero.jpg"
+    alt="A row of five cars in a bright showroom"
+    className="absolute inset-0 h-full w-full object-cover object-center"
+  />
+  <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[#F3F6FC]" />
 
-        <div className="mx-auto max-w-6xl px-5 text-center">
-          <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-6xl">Find your car</h1>
-          <p className="mt-3 text-white/85">Browse what is on the floor today.</p>
-        </div>
-        <CarRow className="mt-10" />
-      </section>
+  <header className="absolute inset-x-0 top-0">
+    <div className="mx-auto grid max-w-6xl grid-cols-3 items-center px-5 py-5 text-[#0F1B33]">
+      <p className="truncate text-sm text-[#0F1B33]/75 max-sm:invisible">
+        {user?.email}
+        {isAdmin ? " (admin)" : ""}
+      </p>
+      <span className="text-center text-lg font-semibold tracking-[0.3em] sm:text-xl">MARQUE</span>
+      <div className="flex items-center justify-end gap-2">
+        {isAdmin && (
+          <button
+            onClick={() => setEditing("new")}
+            className={`rounded-full bg-[#0F1B33] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1B2A4A] ${focus}`}
+          >
+            Add vehicle
+          </button>
+        )}
+        <button
+          onClick={logout}
+          className={`rounded-full border border-[#0F1B33]/40 px-4 py-2 text-sm font-medium hover:bg-white/50 ${focus}`}
+        >
+          Log out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div className="relative mx-auto max-w-6xl px-5 pt-28 text-center">
+    <h1 className="text-5xl font-semibold tracking-tight text-[#0F1B33] sm:text-6xl">Find your car</h1>
+    <p className="mt-3 text-[#0F1B33]/75">Browse what is on the floor today.</p>
+  </div>
+</section>
 
       <section className="relative z-10 mx-auto -mt-12 max-w-6xl px-5">
         <div className="rounded-2xl bg-white p-5 shadow-xl shadow-[#3A5796]/10">

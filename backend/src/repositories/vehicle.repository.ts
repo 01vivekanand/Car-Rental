@@ -5,6 +5,7 @@ export interface VehicleRecord {
   category: string;
   price: number;
   quantity: number;
+  imageUrl?: string | null;
 }
 
 export type NewVehicle = Omit<VehicleRecord, "id">;

@@ -14,6 +14,7 @@ const toRecord = (v: {
   category: string;
   price: unknown;
   quantity: number;
+  imageUrl: string | null;
 }): VehicleRecord => ({
   id: v.id,
   make: v.make,
@@ -21,6 +22,7 @@ const toRecord = (v: {
   category: v.category,
   price: Number(v.price),
   quantity: v.quantity,
+  imageUrl: v.imageUrl,
 });
 
 /** MySQL-backed vehicle storage via Prisma. */
