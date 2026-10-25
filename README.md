@@ -106,6 +106,15 @@ Public registration always creates a normal user. The only way to get an admin i
 Protected routes expect an `Authorization: Bearer <token>` header. Each vehicle has an id, make, model, category, price and quantity, plus an optional image path.
 
 ## Screenshots
+<img width="1586" height="815" alt="image" src="https://github.com/user-attachments/assets/dc5a4a94-6dc9-4b13-a185-af27132a62f9" />
+<img width="1831" height="917" alt="image" src="https://github.com/user-attachments/assets/59f7ae4f-4838-40c6-a2c2-9754a5dfef0d" />
+<img width="598" height="831" alt="image" src="https://github.com/user-attachments/assets/d656527e-4e9d-4c52-8f73-e789ef9087b6" />
+<img width="1554" height="710" alt="image" src="https://github.com/user-attachments/assets/aff08e5f-3ce4-4dc2-9821-7311c26ab146" />
+<img width="1565" height="772" alt="image" src="https://github.com/user-attachments/assets/c09e1223-28fe-46a8-90ed-40b57950b308" />
+
+
+
+
 
 
 ## Tests
@@ -121,15 +130,14 @@ The backend tests don't need a database. The service tests use mocked repositori
 ### Test report
 
 Backend:
+<img width="895" height="712" alt="Backend Test" src="https://github.com/user-attachments/assets/4637a8a8-2a41-40c0-927b-9ad3ba57c879" />
 
-```
-<<< paste the output of `npm run test:coverage` in backend >>>
-```
 
 Frontend:
 
 ```
-<<< paste the output of `npm test` in frontend >>>
+<img width="1005" height="436" alt="Frontend Test" src="https://github.com/user-attachments/assets/a3b84da3-a479-4942-b566-6196eafc8965" />
+
 ```
 
 ## My AI Usage
