@@ -135,10 +135,10 @@ Backend:
 
 Frontend:
 
-```
+
 <img width="1005" height="436" alt="Frontend Test" src="https://github.com/user-attachments/assets/a3b84da3-a479-4942-b566-6196eafc8965" />
 
-```
+
 
 ## My AI Usage
 
