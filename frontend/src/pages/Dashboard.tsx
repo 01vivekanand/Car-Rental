@@ -106,7 +106,7 @@ export default function Dashboard() {
   />
   <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[#F3F6FC]" />
 
-  <header className="absolute inset-x-0 top-0">
+  <header className="absolute inset-x-0 top-0 z-10">
     <div className="mx-auto grid max-w-6xl grid-cols-3 items-center px-5 py-5 text-[#0F1B33]">
       <p className="truncate text-sm text-[#0F1B33]/75 max-sm:invisible">
         {user?.email}

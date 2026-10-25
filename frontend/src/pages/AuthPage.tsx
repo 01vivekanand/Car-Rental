@@ -2,7 +2,6 @@ import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { errorText } from "../api";
 import { useAuth } from "../auth";
-import { CarRow } from "../components/CarArt";
 
 const focus =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D5CF5] focus-visible:ring-offset-2";
@@ -50,11 +49,17 @@ export default function AuthPage() {
   );
 
   return (
-    <div className="flex min-h-screen flex-col overflow-hidden bg-gradient-to-b from-[#3A5796] via-[#8EA2D3] to-[#F3F6FC]">
-      <p className="pt-8 text-center text-xl font-semibold tracking-[0.3em] text-white">MARQUE</p>
+    <div className="relative min-h-screen overflow-hidden bg-[#DCE6EF]">
+      <img
+        src="/hero.jpg"
+        alt="A row of five cars in a bright showroom"
+        className="absolute inset-0 h-full w-full object-cover object-bottom"
+      />
 
-      <div className="mx-auto flex w-full max-w-sm flex-1 flex-col items-center justify-center px-5 py-10">
-        <h1 className="mb-6 text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+      <div className="relative mx-auto flex min-h-screen max-w-sm flex-col items-center px-5 pt-8 pb-40">
+        <span className="text-xl font-semibold tracking-[0.3em] text-[#0F1B33]">MARQUE</span>
+
+        <h1 className="mt-10 mb-6 text-center text-4xl font-semibold tracking-tight text-[#0F1B33] sm:text-5xl">
           Find your car
         </h1>
 
@@ -95,8 +100,6 @@ export default function AuthPage() {
           </form>
         </div>
       </div>
-
-      <CarRow className="pb-8" />
     </div>
   );
 }
