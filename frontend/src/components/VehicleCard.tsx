@@ -1,3 +1,4 @@
+import CarArt, { kindFromCategory, PAINTS } from "./CarArt";
 import type { Vehicle } from "../types";
 
 interface Props {
@@ -12,53 +13,68 @@ interface Props {
 const money = (value: number) =>
   value.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
+const focus =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D5CF5] focus-visible:ring-offset-2";
+
 export default function VehicleCard({ vehicle, isAdmin, onPurchase, onEdit, onDelete, onRestock }: Props) {
   const soldOut = vehicle.quantity === 0;
+  const lowStock = !soldOut && vehicle.quantity <= 3;
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-slate-700/60 bg-slate-800/70 shadow-lg transition hover:-translate-y-1 hover:border-emerald-500/50">
-      <div className="flex h-28 items-center justify-center bg-gradient-to-br from-emerald-500/30 via-sky-500/20 to-slate-800 text-5xl">
-        🚗
-      </div>
-
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <h3 className="text-lg font-semibold text-white">{vehicle.make} {vehicle.model}</h3>
-            <span className="mt-1 inline-block rounded-full bg-sky-500/15 px-2.5 py-0.5 text-xs font-medium text-sky-300">
-              {vehicle.category}
-            </span>
-          </div>
-          <p className="text-lg font-bold text-emerald-400">{money(vehicle.price)}</p>
+    <article className="flex flex-col rounded-2xl p-4 transition-colors hover:bg-white">
+      <div className="relative">
+        <div className={`flex h-44 items-center justify-center px-2 ${soldOut ? "opacity-50 grayscale" : ""}`}>
+          {vehicle.imageUrl ? (
+            <img src={vehicle.imageUrl} alt="" className="max-h-full object-contain" />
+          ) : (
+            <CarArt
+              kind={kindFromCategory(vehicle.category)}
+              paint={PAINTS[vehicle.id % PAINTS.length]}
+              className="w-full max-w-[280px]"
+            />
+          )}
         </div>
 
-        <p className={`text-sm ${soldOut ? "font-medium text-rose-400" : "text-slate-400"}`}>
-          {soldOut ? "Out of stock" : `${vehicle.quantity} in stock`}
-        </p>
-
-        <button
-          type="button"
-          disabled={soldOut}
-          onClick={() => onPurchase(vehicle.id)}
-          className="mt-auto rounded-lg bg-emerald-500 px-4 py-2 font-semibold text-slate-900 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-500"
-        >
-          Purchase
-        </button>
-
-        {isAdmin && (
-          <div className="grid grid-cols-3 gap-2 border-t border-slate-700 pt-3 text-sm">
-            <button type="button" onClick={() => onEdit(vehicle)} className="rounded-md bg-slate-700 py-1.5 text-slate-200 hover:bg-slate-600">
-              Edit
-            </button>
-            <button type="button" onClick={() => onRestock(vehicle.id)} className="rounded-md bg-slate-700 py-1.5 text-slate-200 hover:bg-slate-600">
-              Restock
-            </button>
-            <button type="button" onClick={() => onDelete(vehicle.id)} className="rounded-md bg-rose-500/20 py-1.5 text-rose-300 hover:bg-rose-500/30">
-              Delete
-            </button>
-          </div>
+        {soldOut && (
+          <span className="absolute left-0 top-0 rounded-full bg-[#0F1B33] px-3 py-1 text-xs font-medium text-white">
+            Sold out
+          </span>
+        )}
+        {lowStock && (
+          <span className="absolute left-0 top-0 rounded-full bg-[#E4E9FF] px-3 py-1 text-xs font-medium text-[#2B44C8]">
+            Only {vehicle.quantity} left
+          </span>
         )}
       </div>
+
+      <h3 className="mt-3 text-lg font-semibold">
+        {vehicle.make} {vehicle.model}
+      </h3>
+      <p className="text-sm text-[#5B6880]">{vehicle.category}</p>
+      <p className="mt-1 text-base font-medium tabular-nums">{money(vehicle.price)}</p>
+
+      <button
+        type="button"
+        disabled={soldOut}
+        onClick={() => onPurchase(vehicle.id)}
+        className={`mt-4 rounded-full border border-[#0F1B33] px-4 py-2 text-sm font-semibold transition-colors hover:bg-[#0F1B33] hover:text-white disabled:cursor-not-allowed disabled:border-[#C5CCDA] disabled:text-[#9AA5B8] disabled:hover:bg-transparent disabled:hover:text-[#9AA5B8] ${focus}`}
+      >
+        Purchase
+      </button>
+
+      {isAdmin && (
+        <div className="mt-3 flex gap-4 text-sm text-[#5B6880]">
+          <button type="button" onClick={() => onEdit(vehicle)} className={`rounded hover:text-[#0F1B33] hover:underline ${focus}`}>
+            Edit
+          </button>
+          <button type="button" onClick={() => onRestock(vehicle.id)} className={`rounded hover:text-[#0F1B33] hover:underline ${focus}`}>
+            Restock
+          </button>
+          <button type="button" onClick={() => onDelete(vehicle.id)} className={`rounded text-[#B42318] hover:underline ${focus}`}>
+            Delete
+          </button>
+        </div>
+      )}
     </article>
   );
 }

@@ -30,6 +30,39 @@ const camry: VehicleRecord = {
 };
 
 describe("VehicleService.create", () => {
+
+
+it("saves an optional image path", async () => {
+  const repo = makeRepo();
+  repo.create.mockImplementation(async (data) => ({ id: 1, ...data }));
+
+  await new VehicleService(repo).create({
+    make: "Toyota",
+    model: "Camry",
+    category: "Sedan",
+    price: 28500,
+    imageUrl: "/cars/camry.jpg",
+  });
+
+  expect(repo.create).toHaveBeenCalledWith(
+    expect.objectContaining({ imageUrl: "/cars/camry.jpg" })
+  );
+});
+
+it("rejects an image that is not text", async () => {
+  await expect(
+    new VehicleService(makeRepo()).create({
+      make: "A",
+      model: "B",
+      category: "C",
+      price: 10,
+      imageUrl: 123 as unknown as string,
+    })
+  ).rejects.toThrow(VehicleValidationError);
+});
+
+
+
   it("saves a valid vehicle and defaults quantity to 0", async () => {
     const repo = makeRepo();
     repo.create.mockImplementation(async (data) => ({ id: 1, ...data }));
@@ -75,7 +108,8 @@ describe("VehicleService.create", () => {
       service.create({ make: "A", model: "B", category: "C", price: 10, quantity: 1.5 })
     ).rejects.toThrow(VehicleValidationError);
   });
-});
+}
+);
 
 describe("VehicleService.list and search", () => {
   it("lists all vehicles", async () => {

@@ -43,6 +43,19 @@ describe("authentication", () => {
 });
 
 describe("POST and GET /api/vehicles", () => {
+
+   it("saves and returns an image path", async () => {
+  const res = await request(buildApp())
+    .post("/api/vehicles")
+    .set("Authorization", bearer("USER"))
+    .send({ ...camry, imageUrl: "/cars/camry.jpg" });
+
+  expect(res.status).toBe(201);
+  expect(res.body.imageUrl).toBe("/cars/camry.jpg");
+});
+
+
+
   it("creates a vehicle and lists it", async () => {
     const app = buildApp();
     const created = await request(app)
