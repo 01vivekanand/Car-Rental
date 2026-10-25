@@ -1,5 +1,8 @@
 import request from "supertest";
 import { createApp } from "../app";
+
+import { VehicleService } from "../services/vehicle.service";
+import { InMemoryVehicleRepository } from "../test-utils/in-memory-vehicle.repository";
 import { AuthService } from "../services/auth.service";
 import {
   NewUser,
@@ -23,7 +26,11 @@ class InMemoryUserRepository implements UserRepository {
 }
 
 const buildApp = () =>
-  createApp(new AuthService(new InMemoryUserRepository(), "test-secret"));
+  createApp({
+    auth: new AuthService(new InMemoryUserRepository(), "test-secret"),
+    vehicles: new VehicleService(new InMemoryVehicleRepository()),
+    jwtSecret: "test-secret",
+  });
 
 const creds = { email: "a@b.com", password: "password123" };
 
