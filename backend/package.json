@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/server.ts",
-    "build": "tsc",
-    "test": "jest --runInBand",
-    "test:coverage": "jest --coverage --runInBand",
-    "seed": "ts-node src/seed.ts"
-  },
+  "dev": "ts-node-dev --respawn src/server.ts",
+  "build": "prisma generate && tsc -p tsconfig.build.json",
+  "start": "node dist/server.js",
+  "test": "jest --runInBand",
+  "test:coverage": "jest --coverage --runInBand",
+  "seed": "ts-node src/seed.ts"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
