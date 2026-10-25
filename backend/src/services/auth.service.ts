@@ -18,6 +18,11 @@ export class InvalidCredentialsError extends Error {
 
 export type PublicUser = Omit<UserRecord, "passwordHash">;
 
+const toPublicUser = (user: UserRecord): PublicUser => {
+  const { passwordHash: _hash, ...publicUser } = user;
+  return publicUser;
+};
+
 export class AuthService {
   constructor(
     private readonly users: UserRepository,
@@ -26,18 +31,15 @@ export class AuthService {
 
   /** Creates a new user with a hashed password. Never returns the hash. */
   async register(email: string, password: string): Promise<PublicUser> {
-    const existing = await this.users.findByEmail(email);
-    if (existing) {
-      throw new EmailAlreadyUsedError();
-    }
-
-    const passwordHash = await bcrypt.hash(password, 10);
-    const { passwordHash: _hash, ...publicUser } = await this.users.create({
-      email,
-      passwordHash,
-    });
-    return publicUser;
+  const existing = await this.users.findByEmail(email);
+  if (existing) {
+    throw new EmailAlreadyUsedError();
   }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+  const created = await this.users.create({ email, passwordHash });
+  return toPublicUser(created);
+}
 
   /** Verifies credentials and returns a signed JWT plus the public user. */
   async login(
@@ -52,7 +54,6 @@ export class AuthService {
     const token = jwt.sign({ sub: String(user.id), role: user.role }, this.jwtSecret, {
       expiresIn: "1h",
     });
-    const { passwordHash: _hash, ...publicUser } = user;
-    return { token, user: publicUser };
+    return { token, user: toPublicUser(user) };
   }
 }
